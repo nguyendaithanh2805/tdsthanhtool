@@ -47,11 +47,12 @@ class OOP:
         arr_id_value = []
         arr_type_value = []
         for item in data:
-            if 'error' in item and 'countdown' in item:
-                countdown = int(item['countdown'])
-                for i in range(countdown, 0, -1):
-                    print(f'Thao tác quá nhanh vui lòng chậm lại, đợi {i} giây', end='\r')
-                    time.sleep(1)
+            if 'countdown' in data:
+                    countdown_value = data['countdown']
+                    print(countdown_value)
+                    for i in range(int(countdown_value), 0, -1):
+                        print(f'Thao tác quá nhanh vui lòng chậm lại, đợi {i} giây', end='\r')
+                        time.sleep(1)
             elif 'id' in item:
                 id_value = item['id']
                 type_value = item['type']
@@ -64,8 +65,10 @@ class OOP:
                     self.nhanXu(id_value, type_value)
                     del arr_id_value[i]
                     del arr_type_value[i]
-            elif 'error' in item and 'time_reset' in item:
+            elif 'time_reset' in data:
+                time_value = data['time_reset']
                 print('Đổi cookie mới')
+                print(time_value)
                 exit()
             else:
                 return
@@ -80,7 +83,7 @@ class OOP:
                 xuTong = int(re.search(r'\d+', msg).group())
                 self.xuHienTai += xuTong
                 self.STT+= 1
-                print('[' + str(self.STT) + '] | ' + str(now.strftime("%H:%M:%S")) + ' | ' + 'ID : ' + str(id_value) + '  | ' + 'Trạng thái : ' + str(type_value) + ' | + ' + str(xuTong) + ' | ' + 'Xu hiện tại : ' + str(self.xuHienTai))
+                print('[' + str(self.STT) + ']  |  ' + str(now.strftime("%H:%M:%S")) + '  |  ' + 'ID : ' + str(id_value) + '  |  ' + 'Trang thai : ' + str(type_value) + '  |  + ' + str(xuTong) + '  |  ' + 'Xu hien tai : ' + str(self.xuHienTai))
                 if (self.STT == answer):
                     self.nghiChongBlock(chongBlock)
                 else:
@@ -114,14 +117,14 @@ class OOP:
             'Upgrade-Insecure-Requests':'1',
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36'           
             }
-        r = requests.get(urlReaction, headers= headers)
+        r = requests.get(urlReaction, headers= headers, stream= True)
         text = r.text
         # try:
         try:
             if type_value == 'LIKE':
                     splitTextLike = text.split('<a href="/ufi/reaction/?')[1].split('"')[0]
                     urlLike = 'https://mbasic.facebook.com/ufi/reaction/?{}'.format(html.unescape(splitTextLike))
-                    r = requests.get(urlLike, headers= headers)
+                    r = requests.get(urlLike, headers= headers, stream= True)
                     check = r.text
                     should_exit = self.checkBlock(check)
                     if should_exit:
@@ -129,7 +132,7 @@ class OOP:
             elif type_value == 'LOVE':
                     splitTextLike = text.split('<a href="/ufi/reaction/?')[2].split('"')[0]
                     urlLike = 'https://mbasic.facebook.com/ufi/reaction/?{}'.format(html.unescape(splitTextLike))
-                    r = requests.get(urlLike, headers= headers)
+                    r = requests.get(urlLike, headers= headers, stream= True)
                     check = r.text
                     should_exit = self.checkBlock(check)
                     if should_exit:
@@ -137,7 +140,7 @@ class OOP:
             elif type_value == 'CARE':
                     splitTextLike = text.split('<a href="/ufi/reaction/?')[3].split('"')[0]
                     urlLike = 'https://mbasic.facebook.com/ufi/reaction/?{}'.format(html.unescape(splitTextLike))
-                    r = requests.get(urlLike, headers= headers)
+                    r = requests.get(urlLike, headers= headers, stream= True)
                     check = r.text
                     should_exit = self.checkBlock(check)
                     if should_exit:
@@ -145,7 +148,7 @@ class OOP:
             elif type_value == 'HAHA':
                     splitTextLike = text.split('<a href="/ufi/reaction/?')[4].split('"')[0]
                     urlLike = 'https://mbasic.facebook.com/ufi/reaction/?{}'.format(html.unescape(splitTextLike))
-                    r = requests.get(urlLike, headers= headers)
+                    r = requests.get(urlLike, headers= headers, stream= True)
                     check = r.text
                     should_exit = self.checkBlock(check)
                     if should_exit:
@@ -153,7 +156,7 @@ class OOP:
             elif type_value == 'WOW':
                     splitTextLike = text.split('<a href="/ufi/reaction/?')[5].split('"')[0]
                     urlLike = 'https://mbasic.facebook.com/ufi/reaction/?{}'.format(html.unescape(splitTextLike))
-                    r = requests.get(urlLike, headers= headers)
+                    r = requests.get(urlLike, headers= headers, stream= True)
                     check = r.text
                     should_exit = self.checkBlock(check)
                     if should_exit:
@@ -161,7 +164,7 @@ class OOP:
             elif type_value == 'SAD':
                     splitTextLike = text.split('<a href="/ufi/reaction/?')[6].split('"')[0]
                     urlLike = 'https://mbasic.facebook.com/ufi/reaction/?{}'.format(html.unescape(splitTextLike))
-                    r = requests.get(urlLike, headers= headers)
+                    r = requests.get(urlLike, headers= headers, stream= True)
                     check = r.text
                     should_exit = self.checkBlock(check)
                     if should_exit:
@@ -169,7 +172,7 @@ class OOP:
             elif type_value == 'ANGRY':
                     splitTextLike = text.split('<a href="/ufi/reaction/?')[7].split('"')[0]
                     urlLike = 'https://mbasic.facebook.com/ufi/reaction/?{}'.format(html.unescape(splitTextLike))
-                    r = requests.get(urlLike, headers= headers)
+                    r = requests.get(urlLike, headers= headers, stream= True)
                     check = r.text
                     should_exit = self.checkBlock(check)
                     if should_exit:
@@ -200,6 +203,9 @@ cookie = input('Nhập cookie : ')
 seconds = int(input('Nhập delay : '))
 answer = int(input('Sau bao nhiêu nhiệm vụ thì nghỉ chống block : '))
 chongBlock = int(input('Nghỉ chống block bao nhiêu giây : '))
+# TDS_token = 'TDSQfikjclZXZzJiOiIXZ2V2ciwiIxETMxgmbhhGdpFGZiojIyV2c1Jye'
+# idfb = '100078816955052'
+# cookie = 'sb=trkjZSEjXMf1YBugEh1xDun5; datr=trkjZdyelR9yeIFQoFSok8z3; locale=vi_VN; dpr=1.25; c_user=100078816955052; xs=28%3AYYseftndrtgxSg%3A2%3A1696840200%3A-1%3A2127; wd=982x747; fr=09hFdxPFXjurOMcgW.AWXZ95QtD8XWV0Cvr2K5NvCZhXc.BlI7m2.Ld.AAA.0.0.BlI8BT.AWXnUefqVY8; presence=C%7B%22t3%22%3A%5B%5D%2C%22utc3%22%3A1696841816321%2C%22v%22%3A1%7D'
 api = OOP(TDS_token, idfb, cookie)
 api.layThongTinAcc()
 api.datCauHinh()
